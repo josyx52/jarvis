@@ -1,0 +1,26 @@
+# ============================================================
+# jarvis-ctl — ficheiro de configuração
+#
+# Copiar para C:\ProgramData\JarvisCtl\jarvis-ctl.conf
+# e preencher os valores antes de distribuir.
+#
+# Ordem de prioridade:
+#   1. Variável de ambiente (ex: JARVIS_DB_PASS=xxx)
+#   2. Este ficheiro
+# ============================================================
+
+[database]
+# Servidor PostgreSQL do Jarvis Center
+host     = localhost
+name     = jarvis
+user     = postgres
+password = PREENCHER
+
+[foundry]
+# Azure AI Foundry — endpoint e API key do projecto Anthropic
+endpoint = https://YOUR-RESOURCE.openai.azure.com/anthropic
+api_key  = PREENCHER
+
+[center]
+# Caminho para o log do Jarvis Center (stdout)
+log_path = C:\JarvisCenter\logs\stdout.log

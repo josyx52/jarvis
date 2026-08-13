@@ -1,0 +1,11 @@
+# ============================================================
+# jarvis-ctl — configuracao para distribuicao interna
+# Copiar para C:\ProgramData\JarvisCtl\jarvis-ctl.conf
+# ============================================================
+
+[foundry]
+provider = center
+
+[center]
+api_url  = http://YOUR-JARVIS-CENTER-HOST:8080
+api_key  = replace-with-your-own-jarvis-api-key

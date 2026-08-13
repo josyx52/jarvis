@@ -1,0 +1,159 @@
+<mxfile host="app.diagrams.net" agent="Jarvis" pages="2">
+  <diagram id="mecanismo-b" name="Figura 2 — Agentless completo">
+    <mxGraphModel dx="645" dy="416" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1800" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr-bg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=none;arcSize=4;" value="" vertex="1">
+          <mxGeometry height="70" width="1220" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" value="&lt;font color=&quot;#FFFFFF&quot; style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;FIGURA 2 — Mecanismo B&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#FFE0B2&quot; style=&quot;font-size: 11px;&quot;&gt;Execução remota governada — classificação automática e bootstrap por polling de saída&lt;/font&gt;" vertex="1">
+          <mxGeometry height="55" width="500" x="380" y="28" as="geometry" />
+        </mxCell>
+        <mxCell id="n40" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=11;align=center;shadow=1;" value="&lt;b&gt;40&lt;/b&gt; — Pedido de execução remota recebido" vertex="1">
+          <mxGeometry height="60" width="260" x="370" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="n42" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;42&lt;/b&gt; — Consulta ao directório do domínio (OU, sistema operativo)" vertex="1">
+          <mxGeometry height="60" width="260" x="370" y="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e40-42" edge="1" parent="1" source="n40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n42">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n44" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFE0B2;strokeColor=#E65100;fontSize=11;align=center;shadow=1;" value="&lt;b&gt;44&lt;/b&gt; — Classificação da máquina (alimenta o perfil de execução — sessões, tempos-limite)" vertex="1">
+          <mxGeometry height="90" width="300" x="350" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e42-44" edge="1" parent="1" source="n42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n46" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF8A65;strokeColor=#BF360C;fontColor=#FFFFFF;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;46&lt;/b&gt; — Autenticação por bilhete de rede nativo do domínio, via conta de serviço gerida (sem palavra-passe manual) — uniforme para qualquer categoria de máquina" vertex="1">
+          <mxGeometry height="110" width="300" x="350" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="e44-46" edge="1" parent="1" source="n44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n46">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n50" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=#BF360C;fontColor=#FFFFFF;fontSize=11;align=center;shadow=1;" value="&lt;b&gt;50&lt;/b&gt; — Governador de concorrência: aquisição em cascata de 4 contadores independentes, prazo único" vertex="1">
+          <mxGeometry height="80" width="260" x="370" y="610" as="geometry" />
+        </mxCell>
+        <mxCell id="e46-50" edge="1" parent="1" source="n46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n52" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;52&lt;/b&gt; — Global" vertex="1">
+          <mxGeometry height="55" width="220" x="40" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="n54" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;54&lt;/b&gt; — Por credencial" vertex="1">
+          <mxGeometry height="55" width="220" x="280" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="n56" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;56&lt;/b&gt; — Por máquina" vertex="1">
+          <mxGeometry height="55" width="220" x="520" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="n58" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;58&lt;/b&gt; — Por operador" vertex="1">
+          <mxGeometry height="55" width="220" x="760" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="e50-52" edge="1" parent="1" source="n50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e50-54" edge="1" parent="1" source="n50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n54">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e50-56" edge="1" parent="1" source="n50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e50-58" edge="1" parent="1" source="n50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n58">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n60" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;60&lt;/b&gt; — Pedidos recentes à mesma máquina excedem limiar numa janela curta?" vertex="1">
+          <mxGeometry height="110" width="300" x="350" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="e52-60" edge="1" parent="1" source="n52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e54-60" edge="1" parent="1" source="n54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e56-60" edge="1" parent="1" source="n56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e58-60" edge="1" parent="1" source="n58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n60">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n72" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;72&lt;/b&gt; — Execução directa síncrona (gestão remota tradicional)" vertex="1">
+          <mxGeometry height="80" width="250" x="50" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="n74" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;74&lt;/b&gt; — Verificação por ficheiro de resultado temporário + consulta periódica" vertex="1">
+          <mxGeometry height="90" width="250" x="50" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="e60-72" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#455A64;fontSize=10;" target="n72" value="não">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e72-74" edge="1" parent="1" source="n72" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#455A64;" target="n74">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n62" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;62&lt;/b&gt; — Classificação: operação multi-passo" vertex="1">
+          <mxGeometry height="70" width="250" x="700" y="980" as="geometry" />
+        </mxCell>
+        <mxCell id="n64" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF8A65;strokeColor=#BF360C;fontColor=#FFFFFF;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;64&lt;/b&gt; — Criação remota de processo (acto único) — lança processo temporário na máquina alvo" vertex="1">
+          <mxGeometry height="90" width="250" x="700" y="1070" as="geometry" />
+        </mxCell>
+        <mxCell id="n66" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FF8A65;strokeColor=#BF360C;fontColor=#FFFFFF;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;66&lt;/b&gt; — Processo temporário inicia polling HTTP de saída (tempo de vida definido)" vertex="1">
+          <mxGeometry height="90" width="250" x="700" y="1180" as="geometry" />
+        </mxCell>
+        <mxCell id="n68" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;68&lt;/b&gt; — Máquina alvo contacta o orquestrador para obter o próximo passo" vertex="1">
+          <mxGeometry height="80" width="250" x="700" y="1290" as="geometry" />
+        </mxCell>
+        <mxCell id="n70" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#E65100;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;70&lt;/b&gt; — Orquestrador devolve comando; máquina executa e devolve resultado" vertex="1">
+          <mxGeometry height="80" width="250" x="700" y="1390" as="geometry" />
+        </mxCell>
+        <mxCell id="e60-62" edge="1" parent="1" source="n60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;fontSize=10;" target="n62" value="sim">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e62-64" edge="1" parent="1" source="n62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e64-66" edge="1" parent="1" source="n64" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n66">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e66-68" edge="1" parent="1" source="n66" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n68">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e68-70" edge="1" parent="1" source="n68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n70">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n76" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E65100;strokeColor=#BF360C;fontColor=#FFFFFF;fontSize=11;align=center;shadow=1;" value="&lt;b&gt;76&lt;/b&gt; — Libertação dos 4 contadores, ordem inversa da aquisição" vertex="1">
+          <mxGeometry height="70" width="260" x="370" y="1500" as="geometry" />
+        </mxCell>
+        <mxCell id="e74-76" edge="1" parent="1" source="n74" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#455A64;" target="n76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e70-76" edge="1" parent="1" source="n70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="n78" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;78&lt;/b&gt; — Execuções sucessivas na mesma máquina, dentro da janela de inactividade?" vertex="1">
+          <mxGeometry height="110" width="300" x="350" y="1600" as="geometry" />
+        </mxCell>
+        <mxCell id="n80" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=10;align=center;shadow=1;" value="&lt;b&gt;80&lt;/b&gt; — Agrupadas numa sessão lógica de investigação" vertex="1">
+          <mxGeometry height="70" width="230" x="720" y="1620" as="geometry" />
+        </mxCell>
+        <mxCell id="e76-78" edge="1" parent="1" source="n76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#E65100;" target="n78">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e78-80" edge="1" parent="1" source="n78" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D32;fontSize=10;" target="n80" value="sim">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-bg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;arcSize=3;" value="" vertex="1">
+          <mxGeometry height="100" width="1220" x="40" y="1730" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-txt" parent="1" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=0;strokeColor=none;fillColor=none;spacing=10;" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;40-44&lt;/b&gt; recepção e classificação da máquina · &lt;b&gt;46&lt;/b&gt; autenticação uniforme por bilhete de rede nativo · &lt;b&gt;50-58&lt;/b&gt; governador de concorrência em 4 camadas · &lt;b&gt;60-62&lt;/b&gt; detecção automática de operação multi-passo · &lt;b&gt;64-70&lt;/b&gt; transporte por bootstrap com polling de saída · &lt;b&gt;72-74&lt;/b&gt; transporte directo com verificação por ficheiro · &lt;b&gt;76&lt;/b&gt; libertação dos contadores · &lt;b&gt;78-80&lt;/b&gt; agrupamento em sessão por janela de inactividade.&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="1190" x="55" y="1730" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="d8QlDEbUV8Yfqp1lbPkM" name="Página-2">
+    <mxGraphModel dx="774" dy="499" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

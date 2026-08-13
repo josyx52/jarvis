@@ -1,0 +1,390 @@
+import json
+import os
+
+import psycopg2
+import psycopg2.extras
+
+from brain.foundry_client import FoundryClient
+
+
+def _pg_conn():
+    password = os.getenv("POSTGRES_PASSWORD")
+    if not password:
+        raise RuntimeError("POSTGRES_PASSWORD não configurada — defina a variável de ambiente")
+    return psycopg2.connect(
+        host=os.getenv("POSTGRES_HOST", "localhost"),
+        port=int(os.getenv("POSTGRES_PORT", 5432)),
+        dbname=os.getenv("POSTGRES_DB", "jarvis"),
+        user=os.getenv("POSTGRES_USER", "postgres"),
+        password=password,
+    )
+
+
+_SECURITY_EVENT_TYPES = {
+    "discovery_change", "network_throughput_spike", "login_failed",
+    "privilege_escalation", "unauthorized_access", "new_listening_port",
+    "process_anomaly", "lateral_movement", "ueba_flag",
+}
+
+
+def _needs_context(events: list, correlations: list) -> bool:
+    """
+    Só vai à DB buscar contexto de utilizadores/máquina quando faz sentido:
+    - Há eventos de segurança (login, network anomaly, discovery_change, etc.)
+    - Há eventos críticos + correlações (problema activo, não análise de rotina)
+    - Há vários tipos de alertas correlacionados (indicador de incidente, não blip)
+    """
+    if not events:
+        return False
+
+    # Evento de segurança → sempre enriquecer
+    for e in events:
+        if e.get("event_type") in _SECURITY_EVENT_TYPES:
+            return True
+
+    # Crítico com correlações → problema real, não análise de rotina
+    has_critical = any(e.get("severity") == "critical" for e in events)
+    if has_critical and correlations:
+        return True
+
+    # Múltiplos tipos de alertas correlacionados → incidente composto
+    event_types = {e.get("event_type") for e in events if e.get("event_type")}
+    if len(event_types) >= 3 and correlations:
+        return True
+
+    return False
+
+
+def _fetch_host_context(host: str) -> dict:
+    """
+    Recolhe contexto contextual do host a partir da DB:
+      - Perfil da máquina (papel, serviços críticos, impacto)
+      - Perfis de utilizadores activos neste host (horário típico, função, risco)
+      - Análises UEBA recentes com verdict suspeito
+    Devolve um dict pronto a incluir no prompt de reasoning.
+    """
+    context = {
+        "machine_profile": None,
+        "active_users": [],
+        "ueba_flags": [],
+    }
+    try:
+        conn = _pg_conn()
+        cur  = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        host_base = host.split("::")[0]
+
+        # Perfil da máquina
+        cur.execute(
+            "SELECT profile FROM server_profiles WHERE host ILIKE %s LIMIT 1",
+            (f"%{host_base}%",),
+        )
+        row = cur.fetchone()
+        if row:
+            p = row["profile"] if isinstance(row["profile"], dict) else json.loads(row["profile"])
+            context["machine_profile"] = {
+                "role":              p.get("role"),
+                "role_detail":       p.get("role_detail"),
+                "env":               p.get("env"),
+                "business_impact":   p.get("business_impact"),
+                "critical_services": p.get("critical_services", []),
+                "important_services":p.get("important_services", []),
+                "tech_stack":        p.get("tech_stack", []),
+                "risk_flags":        p.get("risk_flags", []),
+                "summary":           p.get("summary"),
+            }
+
+        # Utilizadores activos neste host (últimas 24h de perfis)
+        cur.execute(
+            """SELECT username, is_human, work_type, risk_score, risk_level, risk_delta,
+                      typical_hours, active_days, after_hours_activity, weekend_activity,
+                      privilege_abuse_detected, behavioral_anomalies, summary
+               FROM user_profiles
+               WHERE host ILIKE %s
+               ORDER BY risk_score DESC
+               LIMIT 10""",
+            (f"%{host_base}%",),
+        )
+        for r in cur.fetchall():
+            context["active_users"].append(dict(r))
+
+        # UEBA — comportamento suspeito recente neste host (últimos 7 dias)
+        cur.execute(
+            """SELECT username, compliance_score, verdict, summary, anomalies, analyzed_at
+               FROM ueba_analyses
+               WHERE host ILIKE %s
+                 AND analyzed_at >= NOW() - INTERVAL '7 days'
+                 AND verdict IN ('suspicious', 'high_risk')
+               ORDER BY compliance_score ASC
+               LIMIT 8""",
+            (f"%{host_base}%",),
+        )
+        for r in cur.fetchall():
+            entry = dict(r)
+            entry["analyzed_at"] = str(entry.get("analyzed_at", ""))
+            # Enriquecer com perfil do utilizador se existir
+            uname = entry.get("username", "")
+            user_p = next((u for u in context["active_users"] if u["username"] == uname), None)
+            if user_p:
+                entry["user_context"] = {
+                    "is_human":      user_p["is_human"],
+                    "work_type":     user_p["work_type"],
+                    "typical_hours": user_p["typical_hours"],
+                    "active_days":   user_p["active_days"],
+                    "after_hours":   user_p["after_hours_activity"],
+                    "weekend":       user_p["weekend_activity"],
+                    "risk_delta":    user_p["risk_delta"],
+                }
+            context["ueba_flags"].append(entry)
+
+        conn.close()
+    except Exception as e:
+        context["_context_error"] = str(e)
+
+    return context
+
+
+class ReasoningEngine:
+
+    def __init__(self):
+        self.llm = FoundryClient()
+
+    def analyze(
+        self,
+        events: list[dict],
+        correlations: list[dict],
+        predictions: list[dict],
+        investigations: list[dict] | None = None,
+        topology: dict | None = None,
+        snapshot: dict | None = None,
+        host: str | None = None,
+    ) -> dict | None:
+
+        if not events and not correlations and not predictions and not investigations:
+            return None
+
+        try:
+            events_small       = self._limit(events, 10)
+            correlations_small = self._limit(correlations, 10)
+            predictions_small  = self._limit(predictions, 5)
+            investigations_small = self._limit(investigations, 5)
+            snapshot_small     = self._summarize_snapshot(snapshot)
+            topology_small     = self._summarize_topology(topology)
+
+            # Contexto do host — só para eventos de segurança ou incidentes críticos
+            host_context = (
+                _fetch_host_context(host)
+                if host and _needs_context(events_small, correlations_small)
+                else {}
+            )
+
+            prompt = self._build_prompt(
+                events_small,
+                correlations_small,
+                predictions_small,
+                investigations_small,
+                topology_small,
+                snapshot_small,
+                host_context,
+                host,
+            )
+
+            if len(prompt) > 15000:
+                prompt = self._truncate_prompt(prompt, 15000)
+
+            try:
+                response = self.llm.generate(prompt)
+            except Exception as e:
+                err_str = str(e).lower()
+                if "too many" in err_str or "rate" in err_str or "429" in err_str:
+                    import time as _time
+                    _time.sleep(5)
+                    response = self.llm.generate(prompt)
+                elif "too long" in err_str or "token" in err_str or "length" in err_str:
+                    response = self.llm.generate(self._truncate_prompt(prompt, 8000))
+                else:
+                    raise
+
+            summary = response.split("\n")[0][:200] if response else "Análise automática"
+
+            return {
+                "summary": summary,
+                "details": response,
+            }
+
+        except Exception as e:
+            return {
+                "summary": "Falha na análise AI",
+                "details": str(e),
+            }
+
+    def _build_prompt(
+        self,
+        events,
+        correlations,
+        predictions,
+        investigations,
+        topology,
+        snapshot,
+        host_context,
+        host,
+    ):
+        machine_section = ""
+        if host_context.get("machine_profile"):
+            mp = host_context["machine_profile"]
+            machine_section = f"""
+MACHINE PROFILE:
+- Role: {mp.get('role')} — {mp.get('role_detail')}
+- Environment: {mp.get('env')} | Business Impact: {mp.get('business_impact')}
+- Critical Services (paragem = impacto directo no negócio): {mp.get('critical_services')}
+- Important Services: {mp.get('important_services')}
+- Tech Stack: {mp.get('tech_stack')}
+- Known Risk Flags: {mp.get('risk_flags')}
+- Summary: {mp.get('summary')}
+"""
+
+        users_section = ""
+        if host_context.get("active_users"):
+            users_section = "ACTIVE USERS ON THIS HOST (behavioural profiles):\n"
+            for u in host_context["active_users"]:
+                users_section += (
+                    f"  - {u['username']}: human={u['is_human']} role={u['work_type']} "
+                    f"typical_hours={u['typical_hours']} active_days={u['active_days']} "
+                    f"after_hours={u['after_hours_activity']} weekend={u['weekend_activity']} "
+                    f"risk={u['risk_level']}(score={u['risk_score']},delta={u['risk_delta']}) "
+                    f"privilege_abuse={u['privilege_abuse_detected']}\n"
+                )
+
+        ueba_section = ""
+        if host_context.get("ueba_flags"):
+            ueba_section = "UEBA BEHAVIOURAL FLAGS (last 7 days, suspicious only):\n"
+            for f in host_context["ueba_flags"]:
+                ctx = f.get("user_context", {})
+                ueba_section += (
+                    f"  - {f['username']}: verdict={f['verdict']} score={f['compliance_score']}\n"
+                    f"    anomalies={f.get('anomalies')}\n"
+                    f"    summary={f.get('summary','')[:200]}\n"
+                )
+                if ctx:
+                    ueba_section += (
+                        f"    user_profile: human={ctx.get('is_human')} "
+                        f"typical_hours={ctx.get('typical_hours')} "
+                        f"after_hours_normal={ctx.get('after_hours')} "
+                        f"risk_delta={ctx.get('risk_delta')}\n"
+                    )
+
+        return f"""SYSTEM:
+You are an advanced infrastructure and security observability AI for a banking environment.
+
+Your task:
+1. Analyze the technical evidence below
+2. Cross-reference user behaviour with their known profiles (are events within normal patterns?)
+3. Identify if critical business services are at risk based on the machine profile
+4. Determine root cause, impact, and recommended actions
+
+Rules:
+- Respond in Portuguese
+- Be concise and technical
+- Do NOT mention SQL, internal tools, or implementation details
+- Do NOT invent evidence not present in the data
+- Windows system accounts (DWM, UMFD, Font Driver Host, NT AUTHORITY\\SYSTEM) have short logon/logoff cycles by design — only flag if corroborated by other evidence
+- A user acting within their typical_hours and active_days is NOT anomalous even if UEBA flagged them — explain this clearly
+- A user acting OUTSIDE typical_hours with high risk_delta IS worth investigating — escalate
+- If critical_services appear in events, treat as high priority regardless of other metrics
+{machine_section}
+{users_section}
+{ueba_section}
+EVENTS:
+{json.dumps(events, indent=2)}
+
+CORRELATIONS:
+{json.dumps(correlations, indent=2)}
+
+PREDICTIONS:
+{json.dumps(predictions, indent=2)}
+
+INVESTIGATIONS:
+{json.dumps(investigations, indent=2)}
+
+TOPOLOGY:
+{json.dumps(topology, indent=2)}
+
+SNAPSHOT:
+{json.dumps(snapshot, indent=2)}
+
+Respond with structured text covering:
+1. short_summary (1 line — what is happening)
+2. machine_context (role and critical services at risk)
+3. user_activity_assessment (for each flagged user: is this within their normal pattern or a real anomaly?)
+4. possible_root_cause
+5. business_impact
+6. recommended_action (ordered by priority)
+"""
+
+    @staticmethod
+    def _truncate_prompt(prompt: str, max_len: int) -> str:
+        """Trunca o prompt por secções, removendo as menos prioritárias primeiro."""
+        if len(prompt) <= max_len:
+            return prompt
+
+        sections_to_cut = ["TOPOLOGY:", "INVESTIGATIONS:", "PREDICTIONS:", "CORRELATIONS:"]
+        for section in sections_to_cut:
+            idx = prompt.find(section)
+            if idx < 0:
+                continue
+            next_section = len(prompt)
+            for other in ["EVENTS:", "CORRELATIONS:", "PREDICTIONS:", "INVESTIGATIONS:",
+                          "TOPOLOGY:", "SNAPSHOT:", "Respond with"]:
+                pos = prompt.find(other, idx + len(section))
+                if 0 < pos < next_section and other != section:
+                    next_section = pos
+            prompt = prompt[:idx] + f"{section}\n(secção omitida por limite de tamanho)\n\n" + prompt[next_section:]
+            if len(prompt) <= max_len:
+                return prompt
+
+        return prompt[:max_len]
+
+    def _limit(self, data, size):
+        if not data:
+            return []
+        return data[:size]
+
+    def _summarize_snapshot(self, snapshot):
+        if not snapshot:
+            return {}
+        try:
+            processes = snapshot.get("processes", [])
+            services  = snapshot.get("services", [])
+            network   = snapshot.get("network", [])
+            top_processes = []
+            for p in processes[:5]:
+                top_processes.append({
+                    "pid":    p.get("pid"),
+                    "name":   p.get("name"),
+                    "cpu":    p.get("cpu_percent") or p.get("percent_processor_time"),
+                    "memory": p.get("resident_size"),
+                })
+            return {
+                "cpu":                snapshot.get("cpu"),
+                "memory":             snapshot.get("memory"),
+                "disk":               snapshot.get("disk"),
+                "top_processes":      top_processes,
+                "services_count":     len(services),
+                "network_interfaces": len(network),
+            }
+        except Exception:
+            return {"snapshot_error": True}
+
+    def _summarize_topology(self, topology):
+        if not topology:
+            return {}
+        try:
+            nodes = topology.get("nodes", [])
+            edges = topology.get("edges", [])
+            return {
+                "nodes_count":  len(nodes),
+                "edges_count":  len(edges),
+                "sample_nodes": nodes[:5],
+                "sample_edges": edges[:5],
+            }
+        except Exception:
+            return {"topology_error": True}

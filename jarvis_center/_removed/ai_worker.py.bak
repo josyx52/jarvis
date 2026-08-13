@@ -1,0 +1,73 @@
+import json
+import os
+import time
+
+import redis
+
+from engines.reasoning_engine import ReasoningEngine
+
+
+_COOLDOWN_S = 2
+_MAX_FAILURES = 3
+_DISABLE_DURATION = 30
+
+
+class AIWorker:
+
+    def __init__(self):
+        self.redis = redis.Redis(
+            host=os.getenv("REDIS_HOST", "localhost"),
+            port=int(os.getenv("REDIS_PORT", "6379")),
+            decode_responses=True,
+        )
+        self.engine = ReasoningEngine()
+        self._failures = 0
+        self._disabled_until = 0.0
+        self._last_call = 0.0
+
+    def run(self):
+        print("[AI WORKER] started")
+
+        while True:
+            item = self.redis.blpop("jarvis:ai_queue", timeout=5)
+            if not item:
+                continue
+
+            now = time.time()
+            if now < self._disabled_until:
+                continue
+            if (now - self._last_call) < _COOLDOWN_S:
+                time.sleep(_COOLDOWN_S - (now - self._last_call))
+
+            data = json.loads(item[1])
+            host = data.get("host", "unknown")
+
+            try:
+                result = self.engine.analyze(
+                    data.get("events"),
+                    data.get("correlations"),
+                    data.get("predictions"),
+                    data.get("investigations"),
+                    {},
+                    data.get("snapshot"),
+                    host=host,
+                )
+
+                if result:
+                    self.redis.xadd(
+                        "jarvis:ai_results",
+                        {"host": host, "result": json.dumps(result, default=str)},
+                        maxlen=1000,
+                    )
+
+                self._failures = 0
+                self._last_call = time.time()
+                print(f"[AI WORKER] processed host={host}")
+
+            except Exception as e:
+                self._failures += 1
+                print(f"[AI WORKER ERROR] host={host}: {e}")
+                if self._failures >= _MAX_FAILURES:
+                    self._disabled_until = time.time() + _DISABLE_DURATION
+                    self._failures = 0
+                    print(f"[AI WORKER] desactivado {_DISABLE_DURATION}s após {_MAX_FAILURES} falhas")

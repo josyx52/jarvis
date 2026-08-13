@@ -1,0 +1,35 @@
+# Segredos — nunca commitar
+.env
+*.env
+!*.env.example
+!*.conf.example
+!*.conf.dist
+
+# Dados de runtime — nunca commitar
+*.rdb
+*.log
+logs/
+data/
+*.db
+*.db-shm
+*.db-wal
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build/instaladores
+build/
+dist/
+installers/
+*.msi
+*.exe
+*.spec
+!JarvisCenterInstaller.spec
+
+# Backups/scratch de scripts internos
+scripts/_lachesis_flow_backups/
+_test_*.json
+_confirm_*.json
+resultado_teste_*.txt

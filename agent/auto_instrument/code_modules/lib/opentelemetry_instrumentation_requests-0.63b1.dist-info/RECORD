@@ -1,0 +1,14 @@
+opentelemetry/instrumentation/requests/__init__.py,sha256=hSFtbZVsiN5dE79Okt4Rzz3-HXKeL9uyg5v_fBt2V2w,23652
+opentelemetry/instrumentation/requests/__pycache__/__init__.cpython-313.pyc,,
+opentelemetry/instrumentation/requests/__pycache__/package.cpython-313.pyc,,
+opentelemetry/instrumentation/requests/__pycache__/version.cpython-313.pyc,,
+opentelemetry/instrumentation/requests/package.py,sha256=2NjCGsLQoB81v4MHaY-NMwH6uWwiIznKBuvgnkAw1Gs,171
+opentelemetry/instrumentation/requests/py.typed,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+opentelemetry/instrumentation/requests/version.py,sha256=uXYZtmFEjxyPMh_7-NE_fhMq7ge4Q9QsJNtZsYoitAo,100
+opentelemetry_instrumentation_requests-0.63b1.dist-info/INSTALLER,sha256=zuuue4knoyJ-UwPPXg8fezS7VCrXJQrAP7zeNuwvFQg,4
+opentelemetry_instrumentation_requests-0.63b1.dist-info/METADATA,sha256=H6sCqvAnDa79KNlwXmVJmwlJUo7Yq-B-uS6p_rxS50o,2622
+opentelemetry_instrumentation_requests-0.63b1.dist-info/RECORD,,
+opentelemetry_instrumentation_requests-0.63b1.dist-info/REQUESTED,sha256=47DEQpj8HBSa-_TImW-5JCeuQeRkm5NMpJWZG3hSuFU,0
+opentelemetry_instrumentation_requests-0.63b1.dist-info/WHEEL,sha256=QccIxa26bgl1E6uMy58deGWi-0aeIkkangHcxk2kWfw,87
+opentelemetry_instrumentation_requests-0.63b1.dist-info/entry_points.txt,sha256=w_cFVp9h9IXzWm2YeBaOEUANSn9iuUlNAl0QC3PDf94,100
+opentelemetry_instrumentation_requests-0.63b1.dist-info/licenses/LICENSE,sha256=xx0jnfkXJvxRnG63LTGOxlggYnIysveWIZ6H3PNdCrQ,11357

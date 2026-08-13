@@ -1,0 +1,129 @@
+<mxfile host="app.diagrams.net" modified="2026-08-12" agent="Jarvis" version="24.0.0">
+  <diagram id="mecanismo-c" name="Figura 3 — Compilador de automações">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1150" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- HEADER -->
+        <mxCell id="hdr-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4527A0;strokeColor=none;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1070" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr" value="&lt;font color=&quot;#FFFFFF&quot; style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;FIGURA 3 — Mecanismo C&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#D1C4E9&quot; style=&quot;font-size: 11px;&quot;&gt;Compilação de instrução em linguagem natural para grafo determinístico, com auto-revisão&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="290" y="28" width="590" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 90 / 92 -->
+        <mxCell id="n90" value="&lt;b&gt;90&lt;/b&gt; — Instrução em linguagem natural, escrita pelo operador" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="120" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="n92" value="&lt;b&gt;92&lt;/b&gt; — Catálogo de sistemas externos já configurados (injectado na compilação)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#7E57C2;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="115" width="240" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- 94 -->
+        <mxCell id="n94" value="&lt;b&gt;94&lt;/b&gt; — Compilação inicial: instrução + catálogo → modelo de linguagem" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B39DDB;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="230" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e90-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n90" target="n94"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e92-94" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7E57C2;" edge="1" parent="1" source="n92" target="n94"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 96 -->
+        <mxCell id="n96" value="&lt;b&gt;96&lt;/b&gt; — Grafo estruturado (nós + arestas), vocabulário fechado de tipos de nó" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="340" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e94-96" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n94" target="n96"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 98 -->
+        <mxCell id="n98" value="&lt;b&gt;98&lt;/b&gt; — Revisão automática estática (2ª invocação, instrução de sistema distinta)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B39DDB;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="450" width="260" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="e96-98" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n96" target="n98"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 100 -->
+        <mxCell id="n100" value="&lt;b&gt;100&lt;/b&gt; — Padrões de erro de geração detectados?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="570" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e98-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n98" target="n100"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 102 104 106 -->
+        <mxCell id="n102" value="&lt;b&gt;102&lt;/b&gt; — Valor literal fixo dentro de repetição que devia usar variável de iteração" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="710" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n104" value="&lt;b&gt;104&lt;/b&gt; — Verificação redundante de recurso de SO dentro de repetição" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="710" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n106" value="&lt;b&gt;106&lt;/b&gt; — Referência a nó inexistente no grafo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="710" width="220" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e100-102" value="sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;fontSize=9;" edge="1" parent="1" source="n100" target="n102"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e100-104" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n100" target="n104"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e100-106" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n100" target="n106"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 108 -->
+        <mxCell id="n108" value="&lt;b&gt;108&lt;/b&gt; — Grafo corrigido" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="290" y="850" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e102-108" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n102" target="n108"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e104-108" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n104" target="n108"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e106-108" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n106" target="n108"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 110 -->
+        <mxCell id="n110" value="&lt;b&gt;110&lt;/b&gt; — Grafo persistido (sem execução real durante a revisão)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#7E57C2;strokeColor=#4527A0;fontColor=#FFFFFF;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="950" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e100-110" value="nenhum" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;fontSize=9;exitX=0.75;exitY=1;entryX=0.9;entryY=0;" edge="1" parent="1" source="n100" target="n110"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e108-110" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n108" target="n110"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 112 -->
+        <mxCell id="n112" value="&lt;b&gt;112&lt;/b&gt; — Execução futura: ordenação topológica dos nós" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1060" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e110-112" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n110" target="n112"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 114 / 116 -->
+        <mxCell id="n114" value="&lt;b&gt;114&lt;/b&gt; — Nó de chamada a sistema externo / consulta a BD / execução remota / filtro condicional" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EDE7F6;strokeColor=#7E57C2;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="1160" width="290" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n116" value="&lt;b&gt;116&lt;/b&gt; — Nó de decisão por julgamento (modelo de linguagem), só quando genuinamente ambíguo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=9;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="1160" width="290" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e112-114" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7E57C2;" edge="1" parent="1" source="n112" target="n114"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e112-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#FF8F00;" edge="1" parent="1" source="n112" target="n116"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 118 -->
+        <mxCell id="n118" value="&lt;b&gt;118&lt;/b&gt; — Propagação de resultado em estrutura de dados nativa (não serializada)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B39DDB;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1290" width="260" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e114-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#7E57C2;" edge="1" parent="1" source="n114" target="n118"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e116-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#FF8F00;" edge="1" parent="1" source="n116" target="n118"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 120 -->
+        <mxCell id="n120" value="&lt;b&gt;120&lt;/b&gt; — Referência estável ao nó de origem, independente do id atribuído" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D1C4E9;strokeColor=#4527A0;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="1400" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e118-120" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#4527A0;" edge="1" parent="1" source="n118" target="n120"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 122 / 124 — ciclo de reversibilidade (tracejado) -->
+        <mxCell id="n122" value="&lt;b&gt;122&lt;/b&gt; — Edição manual do grafo (representação visual)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontSize=9;align=center;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="950" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n124" value="&lt;b&gt;124&lt;/b&gt; — Regeneração da descrição em linguagem natural a partir do grafo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;fontSize=9;align=center;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="820" y="1060" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e110-122" value="edição visual" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#9E9E9E;dashed=1;fontSize=9;" edge="1" parent="1" source="n110" target="n122"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e122-124" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#9E9E9E;dashed=1;" edge="1" parent="1" source="n122" target="n124"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e124-90" value="sincroniza texto ↔ grafo" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#9E9E9E;dashed=1;fontSize=9;exitX=1;exitY=0.2;entryX=1;entryY=0.5;" edge="1" parent="1" source="n124" target="n90"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- LEGENDA -->
+        <mxCell id="leg-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1490" width="1070" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-txt" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;90-94&lt;/b&gt; instrução e compilação assistida por catálogo · &lt;b&gt;96&lt;/b&gt; grafo, vocabulário fechado · &lt;b&gt;98-108&lt;/b&gt; revisão estática e correcção · &lt;b&gt;110&lt;/b&gt; persistência só após revisão · &lt;b&gt;112-116&lt;/b&gt; execução determinística, nó de julgamento isolado · &lt;b&gt;118&lt;/b&gt; propagação estruturada · &lt;b&gt;120&lt;/b&gt; referência estável ao nó de origem · &lt;b&gt;122-124&lt;/b&gt; reversibilidade texto↔grafo (tracejado).&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=0;strokeColor=none;fillColor=none;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="55" y="1490" width="1040" height="60" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

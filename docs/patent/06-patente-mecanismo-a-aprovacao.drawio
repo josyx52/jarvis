@@ -1,0 +1,109 @@
+<mxfile host="app.diagrams.net" modified="2026-08-12" agent="Jarvis" version="24.0.0">
+  <diagram id="mecanismo-a" name="Figura 1 — Aprovação aplicada no despacho">
+    <mxGraphModel dx="1400" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- HEADER -->
+        <mxCell id="hdr-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A237E;strokeColor=none;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="920" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr" value="&lt;font color=&quot;#FFFFFF&quot; style=&quot;font-size: 20px;&quot;&gt;&lt;b&gt;FIGURA 1 — Mecanismo A&lt;/b&gt;&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#9FA8DA&quot; style=&quot;font-size: 11px;&quot;&gt;Aprovação aplicada no despacho de acções de IA — interceptação anterior a qualquer efeito&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="28" width="720" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- 10 -->
+        <mxCell id="n10" value="&lt;b&gt;10&lt;/b&gt; — Modelo de linguagem emite chamada de ferramenta" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C5CAE9;strokeColor=#1A237E;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="120" width="260" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- 12 -->
+        <mxCell id="n12" value="&lt;b&gt;12&lt;/b&gt; — Ferramenta pertence ao conjunto classificado como sujeita a aprovação?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="220" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e10-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;" edge="1" parent="1" source="n10" target="n12"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 14 -->
+        <mxCell id="n14" value="&lt;b&gt;14&lt;/b&gt; — Despacho directo para execução (sem aprovação)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="245" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e12-14" value="não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#455A64;fontSize=10;" edge="1" parent="1" source="n12" target="n14"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 16 -->
+        <mxCell id="n16" value="&lt;b&gt;16&lt;/b&gt; — É da subcategoria de conhecimento persistente de infra?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="370" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e12-16" value="sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;fontSize=10;" edge="1" parent="1" source="n12" target="n16"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 26 -->
+        <mxCell id="n26" value="&lt;b&gt;26&lt;/b&gt; — Estado pendente gravado incondicionalmente (mesmo em automação pré-autorizada)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCCBC;strokeColor=#BF360C;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="365" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e16-26" value="sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;fontSize=10;" edge="1" parent="1" source="n16" target="n26"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 18 -->
+        <mxCell id="n18" value="&lt;b&gt;18&lt;/b&gt; — Canal de origem do pedido" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="530" width="320" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="e16-18" value="não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;fontSize=10;" edge="1" parent="1" source="n16" target="n18"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 20 / 22 / 24 -->
+        <mxCell id="n20" value="&lt;b&gt;20&lt;/b&gt; — Bloqueio síncrono: devolve instrução para confirmação via UI dedicada" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C5CAE9;strokeColor=#1A237E;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="700" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n22" value="&lt;b&gt;22&lt;/b&gt; — Estado pendente gravado com token único + expiração (canal de mensagens)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C5CAE9;strokeColor=#1A237E;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="385" y="700" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="n24" value="&lt;b&gt;24&lt;/b&gt; — Automação: acção pré-autorizada na criação → despacho directo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ECEFF1;strokeColor=#455A64;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="730" y="700" width="230" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e18-20" value="interface conversacional" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;fontSize=9;" edge="1" parent="1" source="n18" target="n20"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e18-22" value="canal de mensagens" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;fontSize=9;" edge="1" parent="1" source="n18" target="n22"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e18-24" value="automação pré-autorizada" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#455A64;fontSize=9;" edge="1" parent="1" source="n18" target="n24"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 28 -->
+        <mxCell id="n28" value="&lt;b&gt;28&lt;/b&gt; — Aguarda mensagem subsequente no mesmo canal" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C5CAE9;strokeColor=#1A237E;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="850" width="260" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e22-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;" edge="1" parent="1" source="n22" target="n28"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e26-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#BF360C;" edge="1" parent="1" source="n26" target="n28"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 30 -->
+        <mxCell id="n30" value="&lt;b&gt;30&lt;/b&gt; — Mensagem contém termo de confirmação reconhecido?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF8E1;strokeColor=#FF8F00;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="950" width="300" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="e28-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#1A237E;" edge="1" parent="1" source="n28" target="n30"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 32 / 34 -->
+        <mxCell id="n32" value="&lt;b&gt;32&lt;/b&gt; — Resolução por token único (uso único, validado)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#C8E6C9;strokeColor=#2E7D32;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="965" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="n34" value="&lt;b&gt;34&lt;/b&gt; — Execução real / escrita definitiva" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=11;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="1075" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e30-32" value="sim" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D32;fontSize=10;" edge="1" parent="1" source="n30" target="n32"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e32-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D32;" edge="1" parent="1" source="n32" target="n34"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- 36 / 38 -->
+        <mxCell id="n36" value="&lt;b&gt;36&lt;/b&gt; — Token expira sem resolução" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFCDD2;strokeColor=#C62828;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="965" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="n38" value="&lt;b&gt;38&lt;/b&gt; — Acção descartada, nada persiste" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EF9A9A;strokeColor=#C62828;fontSize=10;align=center;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1075" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="e30-36" value="não" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C62828;fontSize=10;" edge="1" parent="1" source="n30" target="n36"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e36-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#C62828;" edge="1" parent="1" source="n36" target="n38"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- LEGENDA -->
+        <mxCell id="leg-bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#9E9E9E;arcSize=3;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1160" width="920" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-txt" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;&lt;b&gt;10&lt;/b&gt; chamada de ferramenta · &lt;b&gt;12&lt;/b&gt; classificação estática · &lt;b&gt;14&lt;/b&gt; caminho sem aprovação · &lt;b&gt;16&lt;/b&gt; subcategoria incondicional · &lt;b&gt;18&lt;/b&gt; determinação de canal · &lt;b&gt;20/22/24&lt;/b&gt; comportamento por canal · &lt;b&gt;26&lt;/b&gt; desvio incondicional para pendência · &lt;b&gt;28-30&lt;/b&gt; espera e reconhecimento de confirmação · &lt;b&gt;32&lt;/b&gt; validação por token de uso único · &lt;b&gt;34&lt;/b&gt; efeito persistente real · &lt;b&gt;36-38&lt;/b&gt; expiração sem resolução.&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=0;strokeColor=none;fillColor=none;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="55" y="1160" width="890" height="90" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
